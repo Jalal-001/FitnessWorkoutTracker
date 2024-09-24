@@ -7,6 +7,6 @@
         public DateTime? LockOutEndTime { get; set; }
 
         // For Table Relationships
-        public User Users { get; set; } = null!;
+        public User User { get; set; } = null!;
     }
 }
