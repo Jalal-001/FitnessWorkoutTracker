@@ -3,8 +3,8 @@
     public class UserAuthentication
     {
         public int UserId { get; set; }
-        public required string PasswordHash { get; set; }
-        public required string PassWordSalt { get; set; }
+        public string PasswordHash { get; set; }
+        public string PassWordSalt { get; set; }
         public string? RefreshToken { get; set; }
 
         // For Table Relationships

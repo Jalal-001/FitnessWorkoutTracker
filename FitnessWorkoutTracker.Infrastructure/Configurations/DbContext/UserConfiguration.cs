@@ -9,14 +9,15 @@ namespace FitnessWorkoutTracker.Infrastructure.Configurations.DbContext
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(u => u.UserId);
+
             builder.HasMany(u => u.UserRoles)
                 .WithOne(u => u.User)
                 .HasForeignKey(ur => ur.UserId)
                 .IsRequired();
 
-            builder.HasMany(u => u.UserAuthentications)
+            builder.HasOne(u => u.UserAuthentication)
                 .WithOne(ua => ua.User)
-                .HasForeignKey(ua => ua.UserId)
+                .HasForeignKey<UserAuthentication>(ua => ua.UserId)
                 .IsRequired();
 
             builder.HasMany(u => u.UserSecurities)

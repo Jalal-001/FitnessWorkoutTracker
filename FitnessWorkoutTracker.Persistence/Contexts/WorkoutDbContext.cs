@@ -15,29 +15,6 @@ namespace FitnessWorkoutTracker.Persistence.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            #region Role
-
-            modelBuilder.Entity<Role>().HasKey(r => r.RoleId);
-            modelBuilder.Entity<Role>()
-                .HasMany(r => r.UserRoles)
-            .WithOne(r => r.Role)
-            .HasForeignKey(ur => ur.RoleId);
-
-            modelBuilder.Entity<Role>().Property(r => r.RoleId).HasColumnType("int");
-            modelBuilder.Entity<Role>().Property(r => r.RoleName).HasColumnType("varchar");
-
-            #endregion
-
-            #region UserRole
-
-            modelBuilder.Entity<UserRole>().HasKey(ur => ur.RoleId);
-            modelBuilder.Entity<UserRole>().Property(ur => ur.RoleId).HasColumnType("int");
-            modelBuilder.Entity<UserRole>().Property(ur => ur.UserId).HasColumnType("int");
-
-            #endregion
-
-
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             base.OnModelCreating(modelBuilder);
