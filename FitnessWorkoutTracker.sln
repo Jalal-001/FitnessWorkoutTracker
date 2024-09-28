@@ -7,13 +7,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7AFAFE79-7BF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{86FCB740-F8F0-47E2-8381-8D73FE93E2E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessWorkoutTracker.Domain", "FitnessWorkoutTracker.Domain\FitnessWorkoutTracker.Domain.csproj", "{00A26799-4E94-4E2E-A68A-1EA6463F497B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessWorkoutTracker.Domain", "FitnessWorkoutTracker.Domain\FitnessWorkoutTracker.Domain.csproj", "{00A26799-4E94-4E2E-A68A-1EA6463F497B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{88E77C40-20C0-4780-863D-8DE279AB5AC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessWorkoutTracker.Persistence", "FitnessWorkoutTracker.Persistence\FitnessWorkoutTracker.Persistence.csproj", "{8EBB51F2-F3F7-4313-A977-0ED689C414D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessWorkoutTracker.Persistence", "FitnessWorkoutTracker.Persistence\FitnessWorkoutTracker.Persistence.csproj", "{8EBB51F2-F3F7-4313-A977-0ED689C414D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessWorkoutTracker.Infrastructure", "FitnessWorkoutTracker.Infrastructure\FitnessWorkoutTracker.Infrastructure.csproj", "{B5D3FCC7-3E22-467C-80D7-0E25F87B9FC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessWorkoutTracker.Infrastructure", "FitnessWorkoutTracker.Infrastructure\FitnessWorkoutTracker.Infrastructure.csproj", "{B5D3FCC7-3E22-467C-80D7-0E25F87B9FC5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{5D67FF64-08A2-426D-8700-6E888818C49F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessWorkoutTracker.WebAPI", "FitnessWorkoutTracker.WebAPI\FitnessWorkoutTracker.WebAPI.csproj", "{D68CE2EC-237E-4DF8-82AF-9B22DC9A2E4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,10 @@ Global
 		{B5D3FCC7-3E22-467C-80D7-0E25F87B9FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5D3FCC7-3E22-467C-80D7-0E25F87B9FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5D3FCC7-3E22-467C-80D7-0E25F87B9FC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D68CE2EC-237E-4DF8-82AF-9B22DC9A2E4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D68CE2EC-237E-4DF8-82AF-9B22DC9A2E4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D68CE2EC-237E-4DF8-82AF-9B22DC9A2E4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D68CE2EC-237E-4DF8-82AF-9B22DC9A2E4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +51,8 @@ Global
 		{88E77C40-20C0-4780-863D-8DE279AB5AC9} = {7AFAFE79-7BF0-49E6-B66D-9D394E31AD85}
 		{8EBB51F2-F3F7-4313-A977-0ED689C414D8} = {88E77C40-20C0-4780-863D-8DE279AB5AC9}
 		{B5D3FCC7-3E22-467C-80D7-0E25F87B9FC5} = {88E77C40-20C0-4780-863D-8DE279AB5AC9}
+		{5D67FF64-08A2-426D-8700-6E888818C49F} = {7AFAFE79-7BF0-49E6-B66D-9D394E31AD85}
+		{D68CE2EC-237E-4DF8-82AF-9B22DC9A2E4C} = {5D67FF64-08A2-426D-8700-6E888818C49F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CD17D607-3E52-4DF5-81C2-6EC2C4326FB7}
