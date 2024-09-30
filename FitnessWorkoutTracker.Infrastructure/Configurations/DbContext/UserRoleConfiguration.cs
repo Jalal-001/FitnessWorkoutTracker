@@ -8,8 +8,8 @@ namespace FitnessWorkoutTracker.Infrastructure.Configurations.DbContext
     {
         public void Configure(EntityTypeBuilder<UserRole> builder)
         {
-            builder.HasKey(ur => new { ur.UserId, ur.RoleId });
-            builder.HasKey(ur => ur.UserId);
+            builder.HasKey(ur => ur.Id);
+            builder.HasIndex(ur => ur.Id).IsUnique();
         }
     }
 }

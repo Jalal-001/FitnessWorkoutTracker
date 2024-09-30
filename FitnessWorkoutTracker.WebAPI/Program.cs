@@ -1,4 +1,6 @@
 using FitnessWorkoutTracker.Persistence;
+using FitnessWorkoutTracker.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

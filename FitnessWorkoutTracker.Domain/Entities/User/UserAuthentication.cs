@@ -1,13 +1,14 @@
-﻿namespace FitnessWorkoutTracker.Domain.Entities.User
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace FitnessWorkoutTracker.Domain.Entities.User
 {
-    public class UserAuthentication
+    public class UserAuthentication : AuditableEntity
     {
-        public int UserId { get; set; }
         public string PasswordHash { get; set; }
         public string PassWordSalt { get; set; }
         public string? RefreshToken { get; set; }
 
-        // For Table Relationships
+        // Navigations
         public User User { get; set; } = null!;
     }
 }

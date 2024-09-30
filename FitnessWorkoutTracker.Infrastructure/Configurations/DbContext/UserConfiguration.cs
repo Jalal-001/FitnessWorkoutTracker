@@ -8,8 +8,8 @@ namespace FitnessWorkoutTracker.Infrastructure.Configurations.DbContext
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasKey(u => u.UserId);
-
+            builder.HasNoKey();
+            builder.Ignore(u => u.UserRoles);
             builder.HasMany(u => u.UserRoles)
                 .WithOne(u => u.User)
                 .HasForeignKey(ur => ur.UserId)
@@ -17,7 +17,7 @@ namespace FitnessWorkoutTracker.Infrastructure.Configurations.DbContext
 
             builder.HasOne(u => u.UserAuthentication)
                 .WithOne(ua => ua.User)
-                .HasForeignKey<UserAuthentication>(ua => ua.UserId)
+                .HasForeignKey<UserAuthentication>(ua => ua.Id)
                 .IsRequired();
 
             builder.HasMany(u => u.UserSecurities)
@@ -37,7 +37,7 @@ namespace FitnessWorkoutTracker.Infrastructure.Configurations.DbContext
                 .IsUnicode()
                 .HasMaxLength(100);
 
-            builder.HasIndex(u => u.UserId).IsUnique();
+            builder.HasIndex(u => u.Id).IsUnique();
         }
     }
 }

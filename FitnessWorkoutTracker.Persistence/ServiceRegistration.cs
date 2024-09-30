@@ -12,19 +12,17 @@ namespace FitnessWorkoutTracker.Persistence
         {
             string connectionString = string.Empty;
 
-            if (!Debugger.IsAttached)
-                connectionString = Environment.GetEnvironmentVariable("DbFitnessTracker");
-            else
-                connectionString = configuration.GetConnectionString("DbFitnessTracker");
-
             services.AddDbContext<WorkoutDbContext>(option =>
             {
-                if (Debugger.IsAttached)
+                if (!Debugger.IsAttached)
+                    connectionString = Environment.GetEnvironmentVariable("DbFitnessTracker");
+                else
                 {
+                    connectionString = configuration.GetConnectionString("DbFitnessTracker");
                     option.EnableSensitiveDataLogging();
                     option.EnableDetailedErrors();
                 }
-                option.UseSqlServer(connectionString);
+                option.UseSqlServer(configuration.GetConnectionString("DbFitnessTracker"));
             });
             return services;
         }
