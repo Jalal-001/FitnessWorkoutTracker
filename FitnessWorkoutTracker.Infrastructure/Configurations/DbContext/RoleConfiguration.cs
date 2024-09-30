@@ -9,8 +9,8 @@ namespace FitnessWorkoutTracker.Infrastructure.Configurations.DbContext
         public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder.HasKey(r => r.Id);
-
             builder.Ignore(r => r.UserRoles);
+            builder.Property(r => r.RoleName).HasMaxLength(50);
 
             builder.HasMany(r => r.UserRoles)
                 .WithOne(r => r.Role)

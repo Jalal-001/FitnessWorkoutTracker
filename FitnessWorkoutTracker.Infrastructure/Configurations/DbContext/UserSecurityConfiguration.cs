@@ -9,6 +9,7 @@ namespace FitnessWorkoutTracker.Infrastructure.Configurations.DbContext
         public void Configure(EntityTypeBuilder<UserSecurity> builder)
         {
             builder.HasKey(us => us.Id);
+            builder.Ignore(us => us.User);
             builder.HasIndex(us => us.Id).IsUnique();
         }
     }

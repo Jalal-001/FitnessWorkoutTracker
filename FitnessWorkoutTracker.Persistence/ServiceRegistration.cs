@@ -15,10 +15,10 @@ namespace FitnessWorkoutTracker.Persistence
             services.AddDbContext<WorkoutDbContext>(option =>
             {
                 if (!Debugger.IsAttached)
-                    connectionString = Environment.GetEnvironmentVariable("DbFitnessTracker");
+                    connectionString = Environment.GetEnvironmentVariable("DbFitnessTracker")!;
                 else
                 {
-                    connectionString = configuration.GetConnectionString("DbFitnessTracker");
+                    connectionString = configuration.GetConnectionString("DbFitnessTracker")!;
                     option.EnableSensitiveDataLogging();
                     option.EnableDetailedErrors();
                 }
