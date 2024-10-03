@@ -1,6 +1,4 @@
 using FitnessWorkoutTracker.Persistence;
-using FitnessWorkoutTracker.Persistence.Contexts;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +9,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddPersistenceservices(builder.Configuration);
+
+builder.Services.AddAuthentication(options =>
+{
+    options.RequireAuthenticatedSignIn = true;
+});
 
 
 var app = builder.Build();

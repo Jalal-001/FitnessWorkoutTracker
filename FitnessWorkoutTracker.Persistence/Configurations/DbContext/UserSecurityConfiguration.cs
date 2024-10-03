@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace FitnessWorkoutTracker.Infrastructure.Configurations.DbContext
+namespace FitnessWorkoutTracker.Persistence.Configurations.DbContext
 {
     public class UserSecurityConfiguration : IEntityTypeConfiguration<UserSecurity>
     {
