@@ -25,10 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\FitnessWorkoutTracker.Application\FitnessWorkoutTracker.Application.csproj" />
     <ProjectReference Include="..\FitnessWorkoutTracker.Persistence\FitnessWorkoutTracker.Persistence.csproj" />
   </ItemGroup>
 

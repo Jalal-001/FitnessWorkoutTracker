@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessWorkoutTracker.Infra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{5D67FF64-08A2-426D-8700-6E888818C49F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessWorkoutTracker.WebAPI", "FitnessWorkoutTracker.WebAPI\FitnessWorkoutTracker.WebAPI.csproj", "{D68CE2EC-237E-4DF8-82AF-9B22DC9A2E4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessWorkoutTracker.WebAPI", "FitnessWorkoutTracker.WebAPI\FitnessWorkoutTracker.WebAPI.csproj", "{D68CE2EC-237E-4DF8-82AF-9B22DC9A2E4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessWorkoutTracker.Application", "FitnessWorkoutTracker.Application\FitnessWorkoutTracker.Application.csproj", "{9A5DEE79-5BC1-4517-B605-D9F95058F68F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{D68CE2EC-237E-4DF8-82AF-9B22DC9A2E4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D68CE2EC-237E-4DF8-82AF-9B22DC9A2E4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D68CE2EC-237E-4DF8-82AF-9B22DC9A2E4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A5DEE79-5BC1-4517-B605-D9F95058F68F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A5DEE79-5BC1-4517-B605-D9F95058F68F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A5DEE79-5BC1-4517-B605-D9F95058F68F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A5DEE79-5BC1-4517-B605-D9F95058F68F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{B5D3FCC7-3E22-467C-80D7-0E25F87B9FC5} = {88E77C40-20C0-4780-863D-8DE279AB5AC9}
 		{5D67FF64-08A2-426D-8700-6E888818C49F} = {7AFAFE79-7BF0-49E6-B66D-9D394E31AD85}
 		{D68CE2EC-237E-4DF8-82AF-9B22DC9A2E4C} = {5D67FF64-08A2-426D-8700-6E888818C49F}
+		{9A5DEE79-5BC1-4517-B605-D9F95058F68F} = {86FCB740-F8F0-47E2-8381-8D73FE93E2E4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CD17D607-3E52-4DF5-81C2-6EC2C4326FB7}

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace FitnessWorkoutTracker.Domain.Entities.User
+﻿namespace FitnessWorkoutTracker.Domain.Entities.User
 {
     public class User:AuditableEntity
     {
