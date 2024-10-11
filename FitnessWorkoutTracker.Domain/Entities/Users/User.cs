@@ -1,6 +1,6 @@
-﻿namespace FitnessWorkoutTracker.Domain.Entities.User
+﻿namespace FitnessWorkoutTracker.Domain.Entities.Users
 {
-    public class User:AuditableEntity
+    public class User : AuditableEntity
     {
         public string Name { get; set; }
         public string Surname { get; set; }

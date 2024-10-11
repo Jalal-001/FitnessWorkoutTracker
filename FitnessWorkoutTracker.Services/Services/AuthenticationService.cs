@@ -1,16 +1,16 @@
 ﻿using FitnessWorkoutTracker.Abstractions.Authentication;
-using FitnessWorkoutTracker.Application.Models;
+using FitnessWorkoutTracker.Shared.DTOs;
 
-namespace FitnessWorkoutTracker.Infrastructure.Services
+namespace FitnessWorkoutTracker.Services.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
-        public Task<string> LoginAsync(LoginModel loginModel)
+        public Task<string> LoginAsync(LoginDto loginModel)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> CheckUserExistAsync(UserModel user)
+        public Task<bool> CheckUserExistAsync(UserDto user)
         {
             throw new NotImplementedException();
         }

@@ -1,7 +1,6 @@
-﻿using FitnessWorkoutTracker.Application.DTOs;
-using FitnessWorkoutTracker.Domain.Entities.User;
+﻿using FitnessWorkoutTracker.Shared.DTOs;
 
-namespace FitnessWorkoutTracker.Application.Interfaces.Authentication
+namespace FitnessWorkoutTracker.Abstractions.Authentication
 {
     public interface IAuthenticationService
     {

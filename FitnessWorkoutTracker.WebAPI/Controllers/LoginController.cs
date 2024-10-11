@@ -1,6 +1,6 @@
-﻿using FitnessWorkoutTracker.Application.DTOs;
-using FitnessWorkoutTracker.Application.Interfaces.Authentication;
-using FitnessWorkoutTracker.Application.Interfaces.Users;
+﻿using FitnessWorkoutTracker.Abstractions.Authentication;
+using FitnessWorkoutTracker.Domain.Repositories.User;
+using FitnessWorkoutTracker.Shared.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,9 +12,9 @@ namespace FitnessWorkoutTracker.WebAPI.Controllers
     public class LoginController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly IUserService _userService;
+        private readonly IUserRepository _userService;
         private readonly IAuthenticationService _authenticationService;
-        public LoginController(IConfiguration configuration, IUserService userService, IAuthenticationService authenticationService)
+        public LoginController(IConfiguration configuration, IUserRepository userService, IAuthenticationService authenticationService)
         {
             _configuration = configuration;
             _userService = userService;

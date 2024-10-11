@@ -1,4 +1,4 @@
-﻿using FitnessWorkoutTracker.Domain.Entities.User;
+﻿using FitnessWorkoutTracker.Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 

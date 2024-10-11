@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FitnessWorkoutTracker.Domain.Entities.User
+namespace FitnessWorkoutTracker.Domain.Entities.Users
 {
-    public class UserRole:AuditableEntity
+    public class UserRole : AuditableEntity
     {
         public int UserId { get; set; }
         public int RoleId { get; set; }

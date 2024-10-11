@@ -1,9 +1,9 @@
-﻿namespace FitnessWorkoutTracker.Application.DTOs
+﻿namespace FitnessWorkoutTracker.Shared.DTOs
 {
     public class UserDto
     {
         public string Name { get; set; }
-        public string Surname { get; set; }
+        public string SurName { get; set; }
         public string FullName { get; set; }
         public string? Email { get; set; }
         public DateTime CreatedAt { get; set; }

@@ -1,12 +1,10 @@
-﻿using FitnessWorkoutTracker.Application.DTOs;
-using FitnessWorkoutTracker.Application.Interfaces.Users;
-using FitnessWorkoutTracker.Domain.Entities.User;
+﻿using FitnessWorkoutTracker.Domain.Repositories.User;
 using FitnessWorkoutTracker.Persistence.Contexts;
-using Microsoft.EntityFrameworkCore;
+using FitnessWorkoutTracker.Shared.DTOs;
 
-namespace FitnessWorkoutTracker.Persistence.Repositories
+namespace FitnessWorkoutTracker.Persistence.Services
 {
-    public class UserRepository : IUserService
+    public class UserRepository : IUserRepository
     {
         private readonly WorkoutDbContext _workoutDbContext;
 
@@ -15,9 +13,10 @@ namespace FitnessWorkoutTracker.Persistence.Repositories
             _workoutDbContext = workoutDbContext;
         }
 
-        public async Task<User> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
+        public async Task<UserDto> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
         {
-            return await _workoutDbContext.Users.FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
+            throw new NotImplementedException();
+            //return await _workoutDbContext.Users.FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
         }
 
         public Task<bool> VerifyLoginAndPassword(LoginDto loginModel, CancellationToken cancellationToken)
