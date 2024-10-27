@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Users\Commands\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FitnessWorkoutTracker.Persistence\FitnessWorkoutTracker.Persistence.csproj" />
     <ProjectReference Include="..\FitnessWorkoutTracker.Shared\FitnessWorkoutTracker.Shared.csproj" />
   </ItemGroup>
 

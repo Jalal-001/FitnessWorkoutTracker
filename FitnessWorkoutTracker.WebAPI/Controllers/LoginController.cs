@@ -1,5 +1,5 @@
-﻿using FitnessWorkoutTracker.Abstractions.Authentication;
-using FitnessWorkoutTracker.Domain.Repositories.User;
+﻿using FitnessWorkoutTracker.Application.Abstractions;
+using FitnessWorkoutTracker.Domain.Repositories;
 using FitnessWorkoutTracker.Shared.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,16 +25,17 @@ namespace FitnessWorkoutTracker.WebAPI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginDto loginModel, CancellationToken cancellationToken)
         {
-            IActionResult response = Unauthorized();
+            //IActionResult response = Unauthorized();
 
-            var verified = await _userService.VerifyLoginAndPassword(loginModel, cancellationToken);
+            //var verified = await _authenticationService.CheckUserExistAsync(UserDto, cancellationToken);
 
-            if (verified)
-            {
-                var tokenString = await _authenticationService.GenerateJsonWebToken(cancellationToken);
-                response = Ok(new { token = tokenString });
-            }
-            return response;
+            //if (verified)
+            //{
+            //    var tokenString = await _authenticationService.GenerateJsonWebToken(cancellationToken);
+            //    response = Ok(new { token = tokenString });
+            //}
+            //return response;
+            return Ok(loginModel);
         }
     }
 }
