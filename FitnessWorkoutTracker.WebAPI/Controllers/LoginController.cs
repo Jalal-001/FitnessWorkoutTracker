@@ -1,6 +1,8 @@
 ﻿using FitnessWorkoutTracker.Application.Abstractions;
+using FitnessWorkoutTracker.Application.UseCases.UserAuthentication.VerifyLoginAndPasswordQuery;
 using FitnessWorkoutTracker.Domain.Repositories;
 using FitnessWorkoutTracker.Shared.DTOs;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,30 +14,31 @@ namespace FitnessWorkoutTracker.WebAPI.Controllers
     public class LoginController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly IUserRepository _userService;
+        private readonly IUserRepository _userRepository;
         private readonly IAuthenticationService _authenticationService;
-        public LoginController(IConfiguration configuration, IUserRepository userService, IAuthenticationService authenticationService)
+        private readonly IMediator _mediator;
+
+        public LoginController(IConfiguration configuration, IUserRepository userService, IAuthenticationService authenticationService, IMediator mediator)
         {
             _configuration = configuration;
-            _userService = userService;
+            _userRepository = userService;
             _authenticationService = authenticationService;
+            _mediator = mediator;
         }
 
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginDto loginModel, CancellationToken cancellationToken)
         {
-            //IActionResult response = Unauthorized();
+            IActionResult response = Unauthorized();
+            var verified = await _mediator.Send(new VerifyLoginAndPasswordQuery(loginModel), cancellationToken);
 
-            //var verified = await _authenticationService.CheckUserExistAsync(UserDto, cancellationToken);
-
-            //if (verified)
-            //{
-            //    var tokenString = await _authenticationService.GenerateJsonWebToken(cancellationToken);
-            //    response = Ok(new { token = tokenString });
-            //}
-            //return response;
-            return Ok(loginModel);
+            if (verified)
+            {
+                var tokenString = await _authenticationService.GenerateJsonWebToken(cancellationToken);
+                response = Ok(new { token = tokenString });
+            }
+            return response;
         }
     }
 }

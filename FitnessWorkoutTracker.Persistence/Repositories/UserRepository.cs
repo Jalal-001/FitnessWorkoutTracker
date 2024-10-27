@@ -2,6 +2,7 @@
 using FitnessWorkoutTracker.Domain.Repositories;
 using FitnessWorkoutTracker.Persistence.Contexts;
 using FitnessWorkoutTracker.Shared.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitnessWorkoutTracker.Persistence.Repositories
 {
@@ -16,15 +17,16 @@ namespace FitnessWorkoutTracker.Persistence.Repositories
 
         public async Task<User> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-            //return await _workoutDbContext.Users.FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
+            return await _workoutDbContext.Users.FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
         }
 
-        public Task<bool> VerifyLoginAndPasswordAsync(LoginDto loginModel, CancellationToken cancellationToken)
+        public async Task<bool> VerifyLoginAndPasswordAsync(LoginDto login, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-
-            //cancellationToken.ThrowIfCancellationRequested();
+            return await _workoutDbContext.UserAuthentications
+               .AnyAsync(ua =>
+               (ua.UserName == login.UserName ||
+               ua.Email == login.Email) &&
+               ua.PassWordSalt == login.Password);
         }
     }
 }

@@ -6,6 +6,6 @@ namespace FitnessWorkoutTracker.Domain.Repositories
     public interface IUserRepository
     {
         Task<User> GetUserByEmailAsync(string email, CancellationToken cancellationToken);
-        Task<bool> VerifyLoginAndPasswordAsync(LoginDto loginModel, CancellationToken cancellationToken);
+        Task<bool> VerifyLoginAndPasswordAsync(LoginDto login, CancellationToken cancellationToken);
     }
 }

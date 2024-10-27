@@ -5,11 +5,6 @@ namespace FitnessWorkoutTracker.Application.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
-        public Task<bool> CheckUserExistAsync(UserDto user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<string> GenerateJsonWebToken(CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
