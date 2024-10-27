@@ -1,7 +1,7 @@
 ﻿using FitnessWorkoutTracker.Application.Abstractions;
 using FitnessWorkoutTracker.Shared.DTOs;
 
-namespace FitnessWorkoutTracker.Services.Services
+namespace FitnessWorkoutTracker.Application.Services
 {
     public class AuthenticationService : IAuthenticationService
     {

@@ -1,8 +1,9 @@
-﻿using FitnessWorkoutTracker.Domain.Repositories;
+﻿using FitnessWorkoutTracker.Domain.Entities.Users;
+using FitnessWorkoutTracker.Domain.Repositories;
 using FitnessWorkoutTracker.Persistence.Contexts;
 using FitnessWorkoutTracker.Shared.DTOs;
 
-namespace FitnessWorkoutTracker.Services.Repositories
+namespace FitnessWorkoutTracker.Persistence.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -13,7 +14,7 @@ namespace FitnessWorkoutTracker.Services.Repositories
             _workoutDbContext = workoutDbContext;
         }
 
-        public async Task<UserDto> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
+        public async Task<User> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
             //return await _workoutDbContext.Users.FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
