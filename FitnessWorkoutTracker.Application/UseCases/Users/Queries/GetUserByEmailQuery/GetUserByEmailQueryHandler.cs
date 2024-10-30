@@ -20,16 +20,7 @@ namespace FitnessWorkoutTracker.Application.UseCases.Users.Queries.GetUserByEmai
             if (user == null)
                 return new UserDto();
 
-            return new UserDto
-            {
-                Name = user.Name,
-                SurName = user.Surname,
-                FullName = user.FullName,
-                Email = user.Email,
-                UpdatedAt = user.UpdatedAt,
-                CreatedAt = user.CreatedAt,
-                IsActive = user.IsActive
-            };
+            return user;
         }
     }
 }

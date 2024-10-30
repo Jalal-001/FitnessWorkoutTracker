@@ -35,7 +35,7 @@ namespace FitnessWorkoutTracker.WebAPI.Controllers
 
             if (verified)
             {
-                var tokenString = await _authenticationService.GenerateJsonWebToken(cancellationToken);
+                var tokenString = _authenticationService.GenerateJsonWebToken(cancellationToken);
                 response = Ok(new { token = tokenString });
             }
             return response;

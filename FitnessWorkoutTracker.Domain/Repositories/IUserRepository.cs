@@ -3,9 +3,9 @@ using FitnessWorkoutTracker.Shared.DTOs;
 
 namespace FitnessWorkoutTracker.Domain.Repositories
 {
-    public interface IUserRepository
+    public interface IUserRepository: IGeneralRepository<UserDto,int>
     {
-        Task<User> GetUserByEmailAsync(string email, CancellationToken cancellationToken);
+        Task<UserDto?> GetUserByEmailAsync(string email, CancellationToken cancellationToken);
         Task<bool> VerifyLoginAndPasswordAsync(LoginDto login, CancellationToken cancellationToken);
     }
 }
