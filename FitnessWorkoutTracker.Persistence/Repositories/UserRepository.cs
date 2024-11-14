@@ -26,7 +26,7 @@ namespace FitnessWorkoutTracker.Persistence.Repositories
 
         public async Task<UserDto?> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
         {
-            return await _workoutDbContext.Users.ProjectTo<UserDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(x => x.Email == email);
+            return await _workoutDbContext.Users.ProjectTo<UserDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(x => x.Email == email, cancellationToken: cancellationToken);
         }
 
         public async Task<bool> VerifyLoginAndPasswordAsync(LoginDto login, CancellationToken cancellationToken)
