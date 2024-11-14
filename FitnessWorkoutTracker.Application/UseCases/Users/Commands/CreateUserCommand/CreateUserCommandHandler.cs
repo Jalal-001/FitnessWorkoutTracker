@@ -1,5 +1,4 @@
 ﻿using FitnessWorkoutTracker.Domain.Repositories;
-using FitnessWorkoutTracker.Shared.DTOs;
 using MediatR;
 
 namespace FitnessWorkoutTracker.Application.UseCases.Users.Commands.CreateUserCommand
