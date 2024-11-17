@@ -1,3 +1,4 @@
+using FitnessWorkoutTracker.Application.Mappings;
 using FitnessWorkoutTracker.Persistence;
 using FitnessWorkoutTracker.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,7 +17,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
 builder.Services.AddPersistenceservices(builder.Configuration);
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("FitnessWorkoutTracker.Application")));
 
 // Configure JWT Base Auth

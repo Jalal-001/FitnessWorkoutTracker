@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using FitnessWorkoutTracker.Domain.Entities.Users;
 using FitnessWorkoutTracker.Domain.Repositories;
 using FitnessWorkoutTracker.Persistence.Contexts;
 using FitnessWorkoutTracker.Shared.DTOs;
@@ -18,9 +19,9 @@ namespace FitnessWorkoutTracker.Persistence.Repositories
             _mapper = mapper;
         }
 
-        public async Task<int> CreateAsync(UserDto entity)
+        public async Task<int> CreateAsync(User entity)
         {
-            await _workoutDbContext.AddAsync(entity);
+            await _workoutDbContext.Users.AddAsync(entity);
             return await _workoutDbContext.SaveChangesAsync();
         }
 
