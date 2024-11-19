@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessWorkoutTracker.Persistence.Migrations
 {
     [DbContext(typeof(WorkoutDbContext))]
-    [Migration("20241002115433_InitialMigrationsWithUserRelatedModels")]
-    partial class InitialMigrationsWithUserRelatedModels
+    [Migration("20241119071011_RenewedInitialMigration")]
+    partial class RenewedInitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace FitnessWorkoutTracker.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.User.Role", b =>
+            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.Users.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,16 +58,13 @@ namespace FitnessWorkoutTracker.Persistence.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.User.User", b =>
+            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.Users.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -103,9 +100,6 @@ namespace FitnessWorkoutTracker.Persistence.Migrations
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -117,10 +111,13 @@ namespace FitnessWorkoutTracker.Persistence.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.User.UserAuthentication", b =>
+            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.Users.UserAuthentication", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -147,15 +144,21 @@ namespace FitnessWorkoutTracker.Persistence.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Id")
                         .IsUnique();
 
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
                     b.ToTable("UserAuthentications");
                 });
 
-            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.User.UserRole", b =>
+            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.Users.UserRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -193,7 +196,7 @@ namespace FitnessWorkoutTracker.Persistence.Migrations
                     b.ToTable("UserRoles");
                 });
 
-            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.User.UserSecurity", b =>
+            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.Users.UserSecurity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -220,47 +223,53 @@ namespace FitnessWorkoutTracker.Persistence.Migrations
                     b.ToTable("UserSecurities");
                 });
 
-            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.User.UserAuthentication", b =>
+            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.Users.UserAuthentication", b =>
                 {
-                    b.HasOne("FitnessWorkoutTracker.Domain.Entities.User.User", "User")
+                    b.HasOne("FitnessWorkoutTracker.Domain.Entities.Users.User", "User")
                         .WithOne("UserAuthentication")
-                        .HasForeignKey("FitnessWorkoutTracker.Domain.Entities.User.UserAuthentication", "Id")
+                        .HasForeignKey("FitnessWorkoutTracker.Domain.Entities.Users.UserAuthentication", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.User.UserRole", b =>
+            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.Users.UserRole", b =>
                 {
-                    b.HasOne("FitnessWorkoutTracker.Domain.Entities.User.Role", null)
+                    b.HasOne("FitnessWorkoutTracker.Domain.Entities.Users.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FitnessWorkoutTracker.Domain.Entities.User.User", null)
+                    b.HasOne("FitnessWorkoutTracker.Domain.Entities.Users.User", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.User.UserSecurity", b =>
+            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.Users.UserSecurity", b =>
                 {
-                    b.HasOne("FitnessWorkoutTracker.Domain.Entities.User.User", null)
+                    b.HasOne("FitnessWorkoutTracker.Domain.Entities.Users.User", "User")
                         .WithMany("UserSecurities")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.User.Role", b =>
+            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.Users.Role", b =>
                 {
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.User.User", b =>
+            modelBuilder.Entity("FitnessWorkoutTracker.Domain.Entities.Users.User", b =>
                 {
                     b.Navigation("UserAuthentication")
                         .IsRequired();

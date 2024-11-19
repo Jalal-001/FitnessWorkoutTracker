@@ -32,11 +32,12 @@ namespace FitnessWorkoutTracker.Persistence.Repositories
 
         public async Task<bool> VerifyLoginAndPasswordAsync(LoginDto login, CancellationToken cancellationToken)
         {
-            return await _workoutDbContext.UserAuthentications
-               .AnyAsync(ua =>
-               (ua.UserName == login.UserName ||
-               ua.Email == login.Email) &&
-               ua.PassWordSalt == login.Password);
+            //return await _workoutDbContext.UserAuthentications
+            //   .AnyAsync(ua =>
+            //   (ua.UserName == login.UserName ||
+            //   ua.Email == login.Email) &&
+            //   ua.PassWordSalt == login.Password);
+            return true;
         }
     }
 }

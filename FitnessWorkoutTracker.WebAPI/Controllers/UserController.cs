@@ -3,10 +3,12 @@ using FitnessWorkoutTracker.Application.UseCases.Users.Commands.CreateUserComman
 using FitnessWorkoutTracker.Domain.Entities.Users;
 using FitnessWorkoutTracker.Shared.DTOs;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessWorkoutTracker.WebAPI.Controllers
 {
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : Controller

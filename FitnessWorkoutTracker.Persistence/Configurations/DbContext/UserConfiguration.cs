@@ -10,10 +10,6 @@ namespace FitnessWorkoutTracker.Persistence.Configurations.DbContext
         {
             builder.HasKey(x => x.Id);
 
-            builder.Ignore(u => u.UserRoles);
-            builder.Ignore(u => u.UserAuthentication);
-            builder.Ignore(u => u.UserSecurities);
-
             builder.HasMany(u => u.UserRoles)
                 .WithOne(u => u.User)
                 .HasForeignKey(ur => ur.UserId)
@@ -21,7 +17,7 @@ namespace FitnessWorkoutTracker.Persistence.Configurations.DbContext
 
             builder.HasOne(u => u.UserAuthentication)
                 .WithOne(ua => ua.User)
-                .HasForeignKey<UserAuthentication>(ua => ua.Id)
+                .HasForeignKey<UserAuthentication>(ua => ua.UserId)
                 .IsRequired();
 
             builder.HasMany(u => u.UserSecurities)
