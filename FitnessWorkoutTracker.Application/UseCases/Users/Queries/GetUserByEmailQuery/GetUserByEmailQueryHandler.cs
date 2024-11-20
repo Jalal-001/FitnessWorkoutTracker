@@ -1,10 +1,11 @@
-﻿using FitnessWorkoutTracker.Domain.Repositories;
-using FitnessWorkoutTracker.Shared.DTOs;
+﻿using FitnessWorkoutTracker.Domain.Entities.Users;
+using FitnessWorkoutTracker.Domain.Repositories;
+using FitnessWorkoutTracker.Shared.DTOs.User;
 using MediatR;
 
 namespace FitnessWorkoutTracker.Application.UseCases.Users.Queries.GetUserByEmailQuery
 {
-    public class GetUserByEmailQueryHandler : IRequestHandler<GetUserByEmailQuery, UserDto>
+    public class GetUserByEmailQueryHandler : IRequestHandler<GetUserByEmailQuery, User>
     {
         private readonly IUserRepository _userRepository;
 
@@ -13,12 +14,12 @@ namespace FitnessWorkoutTracker.Application.UseCases.Users.Queries.GetUserByEmai
             _userRepository = userRepository;
         }
 
-        public async Task<UserDto> Handle(GetUserByEmailQuery request, CancellationToken cancellationToken)
+        public async Task<User> Handle(GetUserByEmailQuery request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetUserByEmailAsync(request.Email, cancellationToken);
 
             if (user == null)
-                return new UserDto();
+                return new User();
 
             return user;
         }

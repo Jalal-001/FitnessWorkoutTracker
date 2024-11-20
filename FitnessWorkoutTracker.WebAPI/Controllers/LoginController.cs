@@ -1,7 +1,7 @@
 ﻿using FitnessWorkoutTracker.Application.Abstractions;
 using FitnessWorkoutTracker.Application.UseCases.UserAuthentication.VerifyLoginAndPasswordQuery;
 using FitnessWorkoutTracker.Domain.Repositories;
-using FitnessWorkoutTracker.Shared.DTOs;
+using FitnessWorkoutTracker.Shared.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +28,7 @@ namespace FitnessWorkoutTracker.WebAPI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] LoginDto loginModel, CancellationToken cancellationToken)
+        public async Task<IActionResult> Login([FromBody] LoginModel loginModel, CancellationToken cancellationToken)
         {
             IActionResult response = Unauthorized();
             var verified = await _mediator.Send(new VerifyLoginAndPasswordQuery(loginModel), cancellationToken);

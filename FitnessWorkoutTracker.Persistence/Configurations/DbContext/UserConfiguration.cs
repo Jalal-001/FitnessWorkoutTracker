@@ -40,6 +40,9 @@ namespace FitnessWorkoutTracker.Persistence.Configurations.DbContext
             builder.Property(u => u.Email)
                 .HasMaxLength(50);
 
+            builder.Property(u => u.IsActive)
+                .HasDefaultValue(1);
+
             builder.HasIndex(u => u.Id).IsUnique();
         }
     }

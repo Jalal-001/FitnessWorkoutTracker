@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
+using FitnessWorkoutTracker.Application.Abstractions;
 using FitnessWorkoutTracker.Domain.Entities.Users;
 using FitnessWorkoutTracker.Domain.Repositories;
 using FitnessWorkoutTracker.Persistence.Contexts;
-using FitnessWorkoutTracker.Shared.DTOs;
+using FitnessWorkoutTracker.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitnessWorkoutTracker.Persistence.Repositories
@@ -11,33 +11,36 @@ namespace FitnessWorkoutTracker.Persistence.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly WorkoutDbContext _workoutDbContext;
+        private readonly IPasswordHelper _passwordHelper;
         private readonly IMapper _mapper;
 
-        public UserRepository(WorkoutDbContext workoutDbContext, IMapper mapper)
+        public UserRepository(WorkoutDbContext workoutDbContext, IPasswordHelper passwordHelper, IMapper mapper)
         {
             _workoutDbContext = workoutDbContext;
+            _passwordHelper = passwordHelper;
             _mapper = mapper;
         }
 
-        public async Task<int> CreateAsync(User entity)
+        public async Task<int> CreateAsync(User user)
         {
-            await _workoutDbContext.Users.AddAsync(entity);
+            await _workoutDbContext.Users.AddAsync(user);
             return await _workoutDbContext.SaveChangesAsync();
         }
 
-        public async Task<UserDto?> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
+        public async Task<User?> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
         {
-            return await _workoutDbContext.Users.ProjectTo<UserDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(x => x.Email == email, cancellationToken: cancellationToken);
+            return await _workoutDbContext.Users.FirstOrDefaultAsync(x => x.Email == email, cancellationToken: cancellationToken);
         }
 
-        public async Task<bool> VerifyLoginAndPasswordAsync(LoginDto login, CancellationToken cancellationToken)
+        public async Task<bool> VerifyLoginAndPasswordAsync(LoginModel login, CancellationToken cancellationToken)
         {
-            //return await _workoutDbContext.UserAuthentications
-            //   .AnyAsync(ua =>
-            //   (ua.UserName == login.UserName ||
-            //   ua.Email == login.Email) &&
-            //   ua.PassWordSalt == login.Password);
-            return true;
+            var user = await _workoutDbContext.Users
+                 .Join(_workoutDbContext.UserAuthentications, user => user.Id, userAuth => userAuth.UserId, (user, userAuth) => new { user, userAuth })
+                 .FirstOrDefaultAsync(all => all.user.Email == login.Email);
+
+            var verifyUser = _passwordHelper.VerifyPasswordAsync(login.Password, user.userAuth.PasswordHash);
+
+            return (user != null && verifyUser);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using FitnessWorkoutTracker.Application.Abstractions;
+﻿using FitnessWorkoutTracker.Application.Abstractions;
 using FitnessWorkoutTracker.Application.Services;
 using FitnessWorkoutTracker.Domain.Repositories;
 using FitnessWorkoutTracker.Persistence.Contexts;

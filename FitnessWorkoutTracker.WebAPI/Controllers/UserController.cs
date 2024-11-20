@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using FitnessWorkoutTracker.Application.UseCases.Users.Commands.CreateUserCommand;
 using FitnessWorkoutTracker.Domain.Entities.Users;
-using FitnessWorkoutTracker.Shared.DTOs;
+using FitnessWorkoutTracker.Shared.DTOs.User;
+using FitnessWorkoutTracker.Shared.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,11 +31,13 @@ namespace FitnessWorkoutTracker.WebAPI.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAsync([FromBody] UserDto user)
+        public async Task<IActionResult> CreateAsync([FromBody] UserRegisterModel user)
         {
             if (ModelState.IsValid)
             {
-                var result = await _mediator.Send(new CreateUserCommand(_mapper.Map<User>(user)));
+                var mappedUser = _mapper.Map<User>(user.User);
+                var mappedUserAuth = _mapper.Map<UserAuthentication>(user.UserAuthentication);
+                var result = await _mediator.Send(new CreateUserCommand(mappedUser, mappedUserAuth));
                 return Ok(result);
             }
             return BadRequest();

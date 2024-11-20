@@ -6,11 +6,11 @@
         public string Surname { get; set; }
         public string FullName { get; set; }
         public string? Email { get; set; }
-        public bool IsActive { get; set; }
+        public short IsActive { get; set; }
 
         // Navigations
         public ICollection<UserRole> UserRoles { get; } = Array.Empty<UserRole>();
-        public UserAuthentication UserAuthentication { get; } = null!;
-        public ICollection<UserSecurity> UserSecurities { get; } = null!;
+        public UserAuthentication? UserAuthentication { get; set; }
+        public ICollection<UserSecurity>? UserSecurities { get; }
     }
 }

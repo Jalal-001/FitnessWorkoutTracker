@@ -1,3 +1,4 @@
+using FitnessWorkoutTracker.Application;
 using FitnessWorkoutTracker.Application.Mappings;
 using FitnessWorkoutTracker.Persistence;
 using FitnessWorkoutTracker.WebAPI.Middlewares;
@@ -17,6 +18,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
 builder.Services.AddPersistenceservices(builder.Configuration);
+builder.Services.AddApplicationServices();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("FitnessWorkoutTracker.Application")));
@@ -40,7 +42,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
-app.UseMiddleware<ExceptionHandlingMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -55,5 +56,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.Run();

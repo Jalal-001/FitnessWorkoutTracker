@@ -1,5 +1,4 @@
 ﻿using FitnessWorkoutTracker.Domain.Entities.Users;
-using FitnessWorkoutTracker.Shared.DTOs;
 using MediatR;
 
 namespace FitnessWorkoutTracker.Application.UseCases.Users.Commands.CreateUserCommand
@@ -7,10 +6,13 @@ namespace FitnessWorkoutTracker.Application.UseCases.Users.Commands.CreateUserCo
     public class CreateUserCommand : IRequest<int>
     {
         public User User { get; set; }
+        public Domain.Entities.Users.UserAuthentication UserAuthentication { get; set; }
 
-        public CreateUserCommand(User user)
+
+        public CreateUserCommand(User user, Domain.Entities.Users.UserAuthentication userAuthentication)
         {
             User = user;
+            UserAuthentication = userAuthentication;
         }
     }
 }

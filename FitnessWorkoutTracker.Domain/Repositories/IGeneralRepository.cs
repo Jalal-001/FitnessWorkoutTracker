@@ -2,6 +2,6 @@
 {
     public interface IGeneralRepository<T, RT>
     {
-        Task<RT> CreateAsync(T entity);
+        Task<RT> CreateAsync(T userEntity);
     }
 }
