@@ -1,6 +1,6 @@
 ﻿namespace FitnessWorkoutTracker.Shared.DTOs.User
 {
-    public class UserSecurityDto : BaseDto
+    public class UserSecurityDto
     {
         public int UserId { get; set; }
         public int FailedLoginAttempts { get; set; }

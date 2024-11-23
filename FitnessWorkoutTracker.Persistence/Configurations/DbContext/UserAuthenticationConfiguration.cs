@@ -10,7 +10,6 @@ namespace FitnessWorkoutTracker.Persistence.Configurations.DbContext
         {
             builder.HasKey(ua => ua.Id);
             builder.Property(ua => ua.PasswordHash).HasMaxLength(128);
-            builder.Property(ua => ua.PassWordSalt).HasMaxLength(8);
             builder.Property(ua => ua.PasswordHash).HasMaxLength(128);
             builder.HasIndex(ua => ua.Id).IsUnique();
         }

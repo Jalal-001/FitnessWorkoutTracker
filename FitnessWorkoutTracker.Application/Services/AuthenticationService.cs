@@ -1,5 +1,5 @@
 ﻿using FitnessWorkoutTracker.Application.Abstractions;
-using FitnessWorkoutTracker.Shared.DTOs;
+using FitnessWorkoutTracker.Shared.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -25,7 +25,7 @@ namespace FitnessWorkoutTracker.Application.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public Task<string> LoginAsync(LoginDto loginModel, CancellationToken cancellationToken)
+        public Task<string> LoginAsync(LoginModel loginModel, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

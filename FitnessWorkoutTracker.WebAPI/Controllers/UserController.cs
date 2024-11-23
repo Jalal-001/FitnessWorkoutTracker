@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using FitnessWorkoutTracker.Application.UseCases.Users.Commands.CreateUserCommand;
 using FitnessWorkoutTracker.Domain.Entities.Users;
-using FitnessWorkoutTracker.Shared.DTOs.User;
 using FitnessWorkoutTracker.Shared.Models;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessWorkoutTracker.WebAPI.Controllers
@@ -36,8 +34,8 @@ namespace FitnessWorkoutTracker.WebAPI.Controllers
             if (ModelState.IsValid)
             {
                 var mappedUser = _mapper.Map<User>(user.User);
-                var mappedUserAuth = _mapper.Map<UserAuthentication>(user.UserAuthentication);
-                var result = await _mediator.Send(new CreateUserCommand(mappedUser, mappedUserAuth));
+                mappedUser.UserAuthentication = _mapper.Map<UserAuthentication>(user.UserAuthentication);
+                var result = await _mediator.Send(new CreateUserCommand(mappedUser));
                 return Ok(result);
             }
             return BadRequest();

@@ -3,7 +3,6 @@ using FitnessWorkoutTracker.Application.Abstractions;
 using FitnessWorkoutTracker.Domain.Entities.Users;
 using FitnessWorkoutTracker.Domain.Repositories;
 using FitnessWorkoutTracker.Persistence.Contexts;
-using FitnessWorkoutTracker.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitnessWorkoutTracker.Persistence.Repositories
@@ -29,18 +28,10 @@ namespace FitnessWorkoutTracker.Persistence.Repositories
 
         public async Task<User?> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
         {
-            return await _workoutDbContext.Users.FirstOrDefaultAsync(x => x.Email == email, cancellationToken: cancellationToken);
-        }
-
-        public async Task<bool> VerifyLoginAndPasswordAsync(LoginModel login, CancellationToken cancellationToken)
-        {
-            var user = await _workoutDbContext.Users
-                 .Join(_workoutDbContext.UserAuthentications, user => user.Id, userAuth => userAuth.UserId, (user, userAuth) => new { user, userAuth })
-                 .FirstOrDefaultAsync(all => all.user.Email == login.Email);
-
-            var verifyUser = _passwordHelper.VerifyPasswordAsync(login.Password, user.userAuth.PasswordHash);
-
-            return (user != null && verifyUser);
+            return await _workoutDbContext.Users
+                .Include(np => np.UserAuthentication)
+                .Include(np => np.UserSecurities)
+                .FirstOrDefaultAsync(x => x.Email == email, cancellationToken: cancellationToken);
         }
     }
 }

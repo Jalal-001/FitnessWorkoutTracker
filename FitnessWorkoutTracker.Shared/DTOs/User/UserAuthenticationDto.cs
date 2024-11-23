@@ -2,6 +2,6 @@
 {
     public class UserAuthenticationDto
     {
-        public string PassWordSalt { get; set; }
+        public string PassWordHash { get; set; }
     }
 }
