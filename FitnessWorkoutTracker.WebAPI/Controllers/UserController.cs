@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using FitnessWorkoutTracker.Application.UseCases.Users.Commands.CreateUserCommand;
+using FitnessWorkoutTracker.Application.UseCases.Users.Queries.GetAllUserQuery;
 using FitnessWorkoutTracker.Domain.Entities.Users;
 using FitnessWorkoutTracker.Shared.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessWorkoutTracker.WebAPI.Controllers
 {
-    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : Controller
@@ -22,11 +23,14 @@ namespace FitnessWorkoutTracker.WebAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Get()
         {
-            return View();
+            var users = await _mediator.Send(new GetAllUserQuery());
+            return Json(users);
         }
 
+
+        [Authorize]
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAsync([FromBody] UserRegisterModel user)

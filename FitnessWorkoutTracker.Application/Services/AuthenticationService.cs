@@ -1,5 +1,8 @@
 ﻿using FitnessWorkoutTracker.Application.Abstractions;
+using FitnessWorkoutTracker.Application.UseCases.UserAuthentication.VerifyLoginAndPasswordQuery;
+using FitnessWorkoutTracker.Application.UseCases.Users.Queries.GetUserByEmailQuery;
 using FitnessWorkoutTracker.Shared.Models;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,10 +14,13 @@ namespace FitnessWorkoutTracker.Application.Services
     public class AuthenticationService : IAuthenticationService
     {
         private readonly IConfiguration _configuration;
+        private readonly IMediator _mediator;
 
-        public AuthenticationService(IConfiguration configuration)
+
+        public AuthenticationService(IConfiguration configuration, IMediator mediator)
         {
             _configuration = configuration;
+            _mediator = mediator;
         }
 
         public string GenerateJsonWebToken(CancellationToken cancellationToken)
@@ -25,9 +31,21 @@ namespace FitnessWorkoutTracker.Application.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public Task<string> LoginAsync(LoginModel loginModel, CancellationToken cancellationToken)
+        public async Task<string> LoginAsync(LoginModel loginModel, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var user = await _mediator.Send(new GetUserByEmailQuery(loginModel.Email));
+
+            if (user != null)
+            {
+                var verified = await _mediator.Send(new VerifyLoginAndPasswordQuery(loginModel), cancellationToken);
+
+                if (verified)
+                {
+                    var tokenString = GenerateJsonWebToken(cancellationToken);
+                    return tokenString;
+                }
+            }
+            return string.Empty;
         }
     }
 }

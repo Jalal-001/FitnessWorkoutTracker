@@ -26,6 +26,15 @@ namespace FitnessWorkoutTracker.Persistence.Repositories
             return await _workoutDbContext.SaveChangesAsync();
         }
 
+        public async Task<ICollection<User>> GetAllUserAsync(CancellationToken cancellationToken)
+        {
+            return await _workoutDbContext.Users
+                .Include(ur => ur.UserRoles)
+                .Include(ua => ua.UserAuthentication)
+                .Include(us => us.UserSecurities)
+                .ToListAsync(cancellationToken);
+        }
+
         public async Task<User?> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
         {
             return await _workoutDbContext.Users

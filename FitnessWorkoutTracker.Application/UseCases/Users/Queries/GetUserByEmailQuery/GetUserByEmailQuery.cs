@@ -1,5 +1,4 @@
 ﻿using FitnessWorkoutTracker.Domain.Entities.Users;
-using FitnessWorkoutTracker.Shared.DTOs.User;
 using MediatR;
 
 namespace FitnessWorkoutTracker.Application.UseCases.Users.Queries.GetUserByEmailQuery

@@ -1,10 +1,7 @@
 ﻿using FitnessWorkoutTracker.Application.Abstractions;
-using FitnessWorkoutTracker.Application.UseCases.UserAuthentication.VerifyLoginAndPasswordQuery;
-using FitnessWorkoutTracker.Application.UseCases.Users.Queries.GetUserByEmailQuery;
 using FitnessWorkoutTracker.Domain.Repositories;
 using FitnessWorkoutTracker.Shared.Models;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -28,24 +25,12 @@ namespace FitnessWorkoutTracker.WebAPI.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginModel loginModel, CancellationToken cancellationToken)
         {
-            IActionResult response = Unauthorized();
+            IActionResult response = NotFound("User not found!");
 
-            var user = await _mediator.Send(new GetUserByEmailQuery(loginModel.Email));
-
-            if (user != null)
-            {
-                var verified = await _mediator.Send(new VerifyLoginAndPasswordQuery(loginModel), cancellationToken);
-
-                if (verified)
-                {
-                    var tokenString = _authenticationService.GenerateJsonWebToken(cancellationToken);
-                    response = Ok(new { token = tokenString });
-                }
-            }
-            return response;
+            var tokenString = await _authenticationService.LoginAsync(loginModel, cancellationToken);
+            return response = Ok(new { token = tokenString });
         }
     }
 }
