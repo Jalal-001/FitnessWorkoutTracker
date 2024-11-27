@@ -4,7 +4,6 @@ using FitnessWorkoutTracker.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -53,7 +52,7 @@ builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 builder.Services.AddPersistenceservices(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("FitnessWorkoutTracker.Application")));
+//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("FitnessWorkoutTracker.Application")));
 
 // Configure JWT Base Auth
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -74,6 +73,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -91,6 +92,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.Run();

@@ -18,7 +18,7 @@ namespace FitnessWorkoutTracker.Application.UseCases.Users.Commands.CreateUserCo
         public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             request.User.UserAuthentication.PasswordHash= _passwordHelper.HashPasswordAsync(request.User.UserAuthentication.PasswordHash);
-            return await _userRepository.CreateAsync(request.User);
+            return await _userRepository.CreateAsync(request.User,cancellationToken);
         }
     }
 }

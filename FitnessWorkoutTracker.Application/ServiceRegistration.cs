@@ -12,6 +12,7 @@ namespace FitnessWorkoutTracker.Application
         {
             services.AddTransient<IPasswordHelper, PasswordHelper>();
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
             return services;
         }

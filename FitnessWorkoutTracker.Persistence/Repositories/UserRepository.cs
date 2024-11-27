@@ -20,19 +20,9 @@ namespace FitnessWorkoutTracker.Persistence.Repositories
             _mapper = mapper;
         }
 
-        public async Task<int> CreateAsync(User user)
+        public async Task<User> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
-            await _workoutDbContext.Users.AddAsync(user);
-            return await _workoutDbContext.SaveChangesAsync();
-        }
-
-        public async Task<ICollection<User>> GetAllUserAsync(CancellationToken cancellationToken)
-        {
-            return await _workoutDbContext.Users
-                .Include(ur => ur.UserRoles)
-                .Include(ua => ua.UserAuthentication)
-                .Include(us => us.UserSecurities)
-                .ToListAsync(cancellationToken);
+            return  await _workoutDbContext.Users.FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
         }
 
         public async Task<User?> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
@@ -41,6 +31,24 @@ namespace FitnessWorkoutTracker.Persistence.Repositories
                 .Include(np => np.UserAuthentication)
                 .Include(np => np.UserSecurities)
                 .FirstOrDefaultAsync(x => x.Email == email, cancellationToken: cancellationToken);
+        }
+
+        public async Task<ICollection<User>?> GetAllAsync(CancellationToken cancellationToken)
+        {
+            return await _workoutDbContext.Users.ToListAsync(cancellationToken);
+        }
+
+        public async Task<User> UpdateAsync(User value, CancellationToken cancellationToken)
+        {
+            _workoutDbContext.Update(value);
+            await _workoutDbContext.SaveChangesAsync(cancellationToken);
+            return value;
+        }
+
+        public async Task<int> CreateAsync(User user, CancellationToken cancellationToken)
+        {
+            await _workoutDbContext.Users.AddAsync(user);
+            return await _workoutDbContext.SaveChangesAsync();
         }
     }
 }

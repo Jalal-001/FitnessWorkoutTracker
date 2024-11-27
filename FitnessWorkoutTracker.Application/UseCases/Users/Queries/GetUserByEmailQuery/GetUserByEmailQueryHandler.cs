@@ -20,8 +20,7 @@ namespace FitnessWorkoutTracker.Application.UseCases.Users.Queries.GetUserByEmai
         public async Task<User> Handle(GetUserByEmailQuery request, CancellationToken cancellationToken)
         {
             _userValidator.ValidateAndThrow(request);
-            var user = await _userRepository.GetUserByEmailAsync(request.Email, cancellationToken);
-            return user;
+            return await _userRepository.GetUserByEmailAsync(request.Email, cancellationToken) ?? throw new Exception("User not found!");
         }
     }
 }

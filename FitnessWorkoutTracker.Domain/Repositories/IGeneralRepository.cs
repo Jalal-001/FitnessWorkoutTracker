@@ -2,6 +2,9 @@
 {
     public interface IGeneralRepository<T, RT>
     {
-        Task<RT> CreateAsync(T userEntity);
+        Task<T> GetByIdAsync(int id, CancellationToken cancellationToken);
+        Task<ICollection<T>?> GetAllAsync(CancellationToken cancellationToken);
+        Task<T> UpdateAsync(T value, CancellationToken cancellationToken);
+        Task<RT> CreateAsync(T userEntity, CancellationToken cancellationToken);
     }
 }

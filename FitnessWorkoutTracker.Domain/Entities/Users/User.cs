@@ -11,7 +11,7 @@
 
         // Navigations
         public ICollection<UserRole>? UserRoles { get; } = Array.Empty<UserRole>();
-        public required UserAuthentication UserAuthentication { get; set; }
+        public UserAuthentication? UserAuthentication { get; set; }
         public ICollection<UserSecurity>? UserSecurities { get; }
     }
 }

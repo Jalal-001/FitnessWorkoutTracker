@@ -13,9 +13,9 @@ namespace FitnessWorkoutTracker.Application.UseCases.Users.Queries.GetAllUserQue
             _userRepository = userRepository;
         }
 
-        public Task<ICollection<User>> Handle(GetAllUserQuery request, CancellationToken cancellationToken)
+        public async Task<ICollection<User>> Handle(GetAllUserQuery request, CancellationToken cancellationToken)
         {
-            return _userRepository.GetAllUserAsync(cancellationToken);
+            return await _userRepository.GetAllAsync(cancellationToken) ?? throw new Exception("There is no user!");
         }
     }
 }
