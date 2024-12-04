@@ -22,7 +22,9 @@ namespace FitnessWorkoutTracker.Persistence.Repositories
 
         public async Task<User> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return await _workoutDbContext.Users.Include(u => u.UserAuthentication).FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+            return await _workoutDbContext.Users
+                .Include(u => u.UserAuthentication)
+                .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
         }
 
         public async Task<User?> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
@@ -55,6 +57,12 @@ namespace FitnessWorkoutTracker.Persistence.Repositories
         {
             user.UserAuthentication.RefreshToken = refreshToken;
             return await _workoutDbContext.SaveChangesAsync(cancellationToken);
+        }
+        public async Task<int> RemoveRefreshTokenAsync(int userId, CancellationToken cancellationToken)
+        {
+            var userAuth = await _workoutDbContext.UserAuthentications.FirstOrDefaultAsync(ua => ua.UserId == userId);
+            userAuth.RefreshToken = string.Empty;
+            return await _workoutDbContext.SaveChangesAsync();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FitnessWorkoutTracker.Application.Abstractions;
+using FitnessWorkoutTracker.Application.UseCases.UserAuthentication.RemoveRefreshTokenCommand;
 using FitnessWorkoutTracker.Application.UseCases.UserAuthentication.VerifyLoginAndPasswordQuery;
 using FitnessWorkoutTracker.Application.UseCases.Users.Queries.GetUserByEmailQuery;
 using FitnessWorkoutTracker.Application.UseCases.Users.Queries.GetUserByIdQuery;
@@ -44,6 +45,12 @@ namespace FitnessWorkoutTracker.Application.Services
                 }
             }
             return new TokenResponseModel();
+        }
+
+        public async Task<int> LogOutAsync(int userId, CancellationToken cancellationToken)
+        {
+            //var user = await _mediator.Send(new GetUserByIdQuery(userId));
+            return await _mediator.Send(new RemoveRefreshTokenCommand(userId));
         }
 
         public async Task<(TokenResponseModel? tokenResponse, User? user)> ValidateRefreshTokenAsync(int userId, CancellationToken cancellationToken)

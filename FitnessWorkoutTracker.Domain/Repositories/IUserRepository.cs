@@ -6,5 +6,6 @@ namespace FitnessWorkoutTracker.Domain.Repositories
     {
         Task<User?> GetUserByEmailAsync(string email, CancellationToken cancellationToken);
         Task<int> AddRefreshTokenAsync(User user, string refreshToken, CancellationToken cancellationToken);
+        Task<int> RemoveRefreshTokenAsync(int userId, CancellationToken cancellationToken);
     }
 }

@@ -32,5 +32,12 @@ namespace FitnessWorkoutTracker.WebAPI.Controllers
             var loginResponse = await _authenticationService.LoginAsync(loginModel, cancellationToken);
             return response = Ok(new { token = loginResponse });
         }
+
+        [HttpPost("id")]
+        public async Task<IActionResult> LogOut([FromBody] int id, CancellationToken cancellationToken)
+        {
+            var result = await _authenticationService.LogOutAsync(id, cancellationToken);
+            return Ok(result);
+        }
     }
 }

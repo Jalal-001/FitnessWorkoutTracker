@@ -1,7 +1,6 @@
 ﻿using FitnessWorkoutTracker.Application.Abstractions;
 using FitnessWorkoutTracker.Application.Utilities;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace FitnessWorkoutTracker.WebAPI.Middlewares
 {
@@ -19,15 +18,27 @@ namespace FitnessWorkoutTracker.WebAPI.Middlewares
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             var accessToken = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").LastOrDefault();
-            var validatedToken = new JwtSecurityToken();
             if (string.IsNullOrWhiteSpace(accessToken))
             {
                 await next(context);
                 return;
             }
+            var jwtToken = _tokenUtils.ReadJwtToken(accessToken);
+            var userId = int.TryParse(jwtToken?.Claims.FirstOrDefault(c => c.Type == "id")?.Value, out int id);
+            var refreshToken = await _authenticationService.ValidateRefreshTokenAsync(id, cancellationToken: default);
+
+            if (string.IsNullOrWhiteSpace(refreshToken.tokenResponse?.RefreshToken))
+            {
+                if (string.IsNullOrWhiteSpace(refreshToken.tokenResponse?.RefreshToken))
+                {
+                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                    await context.Response.WriteAsync("Access token expired, and refresh token is invalid.");
+                    return;
+                }
+            }
             try
             {
-                validatedToken = _tokenUtils.ValidateJwtToken(accessToken);
+                var validatedToken = _tokenUtils.ValidateJwtToken(accessToken);
 
                 if (validatedToken == null)
                 {
@@ -36,9 +47,6 @@ namespace FitnessWorkoutTracker.WebAPI.Middlewares
             }
             catch (SecurityTokenExpiredException)
             {
-                var jwtToken = _tokenUtils.ReadJwtToken(accessToken);
-                var userId = int.TryParse(jwtToken?.Claims.FirstOrDefault(c => c.Type == "id")?.Value, out int id);
-                var refreshToken = await _authenticationService.ValidateRefreshTokenAsync(id, cancellationToken: default);
                 if (string.IsNullOrWhiteSpace(refreshToken.tokenResponse?.RefreshToken))
                 {
                     context.Response.StatusCode = StatusCodes.Status401Unauthorized;

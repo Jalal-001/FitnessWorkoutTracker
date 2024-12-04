@@ -7,5 +7,6 @@ namespace FitnessWorkoutTracker.Application.Abstractions
     {
         Task<TokenResponseModel> LoginAsync(LoginModel loginModel, CancellationToken cancellationToken);
         Task<(TokenResponseModel? tokenResponse, User? user)> ValidateRefreshTokenAsync(int userId, CancellationToken cancellationToken);
+        Task<int> LogOutAsync(int userId, CancellationToken cancellationToken);
     }
 }
