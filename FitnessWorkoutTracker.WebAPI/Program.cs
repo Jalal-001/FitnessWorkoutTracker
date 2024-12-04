@@ -49,10 +49,10 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddAntiforgery();
 
 builder.Services.AddTransient<ExceptionHandlingMiddleware>();
+builder.Services.AddTransient<AuthenticationMiddlware>();
 builder.Services.AddPersistenceservices(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("FitnessWorkoutTracker.Application")));
 
 // Configure JWT Base Auth
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -63,17 +63,29 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
+            ClockSkew = TimeSpan.Zero,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };
-    });
 
+        options.Events = new JwtBearerEvents
+        {
+            OnChallenge = context =>
+            {
+                if (context.AuthenticateFailure != null && context.AuthenticateFailure is SecurityTokenExpiredException)
+                {
+                    context.Request.Headers.Append("Token-Expired", "true");
+                }
+                return Task.CompletedTask;
+            }
+        };
+    });
 
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<AuthenticationMiddlware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

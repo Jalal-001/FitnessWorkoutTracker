@@ -24,7 +24,7 @@ namespace FitnessWorkoutTracker.WebAPI.Controllers
             _mediator = mediator;
             _mapper = mapper;
         }
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Get()
         {

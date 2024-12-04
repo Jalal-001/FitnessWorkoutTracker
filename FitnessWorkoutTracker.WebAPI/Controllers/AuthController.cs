@@ -9,14 +9,14 @@ namespace FitnessWorkoutTracker.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository;
         private readonly IAuthenticationService _authenticationService;
         private readonly IMediator _mediator;
 
-        public LoginController(IConfiguration configuration, IUserRepository userService, IAuthenticationService authenticationService, IMediator mediator)
+        public AuthController(IConfiguration configuration, IUserRepository userService, IAuthenticationService authenticationService, IMediator mediator)
         {
             _configuration = configuration;
             _userRepository = userService;
@@ -29,8 +29,8 @@ namespace FitnessWorkoutTracker.WebAPI.Controllers
         {
             IActionResult response = NotFound("User not found!");
 
-            var tokenString = await _authenticationService.LoginAsync(loginModel, cancellationToken);
-            return response = Ok(new { token = tokenString });
+            var loginResponse = await _authenticationService.LoginAsync(loginModel, cancellationToken);
+            return response = Ok(new { token = loginResponse });
         }
     }
 }

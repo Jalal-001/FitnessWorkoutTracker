@@ -1,13 +1,13 @@
 ﻿using FitnessWorkoutTracker.Application.Abstractions;
 using FitnessWorkoutTracker.Application.UseCases.UserAuthentication.VerifyLoginAndPasswordQuery;
 using FitnessWorkoutTracker.Application.UseCases.Users.Queries.GetUserByEmailQuery;
+using FitnessWorkoutTracker.Application.UseCases.Users.Queries.GetUserByIdQuery;
+using FitnessWorkoutTracker.Application.Utilities;
+using FitnessWorkoutTracker.Domain.Entities.Users;
+using FitnessWorkoutTracker.Domain.Repositories;
 using FitnessWorkoutTracker.Shared.Models;
 using MediatR;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace FitnessWorkoutTracker.Application.Services
 {
@@ -15,23 +15,19 @@ namespace FitnessWorkoutTracker.Application.Services
     {
         private readonly IConfiguration _configuration;
         private readonly IMediator _mediator;
+        private readonly TokenUtils _tokenUtils;
+        private readonly IUserRepository _userRepository;
 
 
-        public AuthenticationService(IConfiguration configuration, IMediator mediator)
+        public AuthenticationService(IConfiguration configuration, IMediator mediator, TokenUtils tokenUtils, IUserRepository userRepository)
         {
             _configuration = configuration;
             _mediator = mediator;
+            _tokenUtils = tokenUtils;
+            _userRepository = userRepository;
         }
 
-        public string GenerateJsonWebToken(CancellationToken cancellationToken)
-        {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var token = new JwtSecurityToken(issuer: _configuration["Jwt:Issuer"], audience: _configuration["Jwt:Audience"], claims: new List<Claim>(), expires: DateTime.Now.AddMinutes(30), signingCredentials: credentials);
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        public async Task<string> LoginAsync(LoginModel loginModel, CancellationToken cancellationToken)
+        public async Task<TokenResponseModel> LoginAsync(LoginModel loginModel, CancellationToken cancellationToken)
         {
             var user = await _mediator.Send(new GetUserByEmailQuery(loginModel.Email));
 
@@ -41,11 +37,24 @@ namespace FitnessWorkoutTracker.Application.Services
 
                 if (verified)
                 {
-                    var tokenString = GenerateJsonWebToken(cancellationToken);
-                    return tokenString;
+                    var accessToken = _tokenUtils.GenerateAccessToken(user);
+                    var refreshToken = _tokenUtils.GenerateRefreshToken();
+                    await _userRepository.AddRefreshTokenAsync(user, refreshToken, cancellationToken);
+                    return new TokenResponseModel(accessToken.token, refreshToken, accessToken.expireDate);
                 }
             }
-            return string.Empty;
+            return new TokenResponseModel();
+        }
+
+        public async Task<(TokenResponseModel? tokenResponse, User? user)> ValidateRefreshTokenAsync(int userId, CancellationToken cancellationToken)
+        {
+            var user = await _mediator.Send(new GetUserByIdQuery(userId));
+            if (!string.IsNullOrWhiteSpace(user?.UserAuthentication?.RefreshToken))
+            {
+                var newAccessToken = _tokenUtils.GenerateAccessToken(user);
+                return (new TokenResponseModel(newAccessToken.token, user.UserAuthentication.RefreshToken, newAccessToken.expireDate), user);
+            }
+            return (null, null);
         }
     }
 }
